@@ -1,0 +1,20 @@
+version: '2'
+services:
+    weba:
+        build: ./web
+        ports:
+            - 8000
+    webb:
+        build: ./web
+        ports:
+            - 8000
+    haproxy:
+      image: haproxy
+      volumes:
+       - ./haproxy:/haproxy-override
+       - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+      links:
+       - weba
+       - webb
+      ports:
+       - 8000:8000
